@@ -1,12 +1,17 @@
 {
+  "name": "collisionDetection",
+  "version": "1.0.0",
+  "description": "Javascript application that detects collisions between circles",
+  "license": "MIT",
   "scripts": {
-   "start": "webpack server",
-   "build": "webpack --env prod"
+    "start": "webpack server",
+    "build": "webpack --env prod"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.3",
     "webpack": "^5.60.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0"

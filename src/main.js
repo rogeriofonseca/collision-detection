@@ -1,5 +1,10 @@
 let canvas, context;
-let x = 0;
+const mouseCoords = {};
+
+const onMouseMove = e => {
+    mouseCoords.x = e.clientX;
+    mouseCoords.y = e.clientY;
+}
 
 const onResize = () => {
     canvas.height = window.innerHeight;
@@ -11,13 +16,11 @@ const draw = () => {
     context.strokeStyle = '#ffffff';
 
     context.beginPath();
-    context.arc(x, x, 150, 0, Math.PI * 2);
+    context.arc(mouseCoords.x, mouseCoords.y, 50, 0, Math.PI * 2);
     context.stroke();
 }
 
-const update = () => {
-    x++;
-};
+const update = () => {};
 
 const step = () => {
     update();
@@ -30,6 +33,7 @@ const init = () => {
     document.body.appendChild(canvas);
     context = canvas.getContext('2d');
 
+    window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', onResize);
     onResize();
     step();

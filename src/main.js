@@ -1,4 +1,5 @@
-let canvas, context;
+import Circle from './circle';
+let canvas, context, c1;
 const mouseCoords = {};
 
 const onMouseMove = e => {
@@ -13,14 +14,12 @@ const onResize = () => {
 
 const draw = () => {
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.strokeStyle = '#ffffff';
-
-    context.beginPath();
-    context.arc(mouseCoords.x, mouseCoords.y, 50, 0, Math.PI * 2);
-    context.stroke();
+    c1.draw(context);
 }
 
-const update = () => {};
+const update = () => {
+    c1.setPosition(mouseCoords);
+};
 
 const step = () => {
     update();
@@ -36,6 +35,8 @@ const init = () => {
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', onResize);
     onResize();
+
+    c1 = new Circle({x: 0, y: 0}, 40);
     step();
 };
 

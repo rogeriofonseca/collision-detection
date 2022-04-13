@@ -2,6 +2,7 @@ import Circle from './circle';
 
 let canvas, context, c1;
 const NUM_CIRCLES = 40;
+const SIZE_MAIN_CIRCLE = 40;
 const objects = [];
 
 const mouseCoords = {};
@@ -23,6 +24,14 @@ const draw = () => {
 
 const update = () => {
     c1.setPosition(mouseCoords);
+    c1.update();
+    objects.forEach(currentCircle => {
+        currentCircle.update();
+        if (currentCircle.overlaps(c1)) {
+            c1.setOverlapping(true);
+            currentCircle.setOverlapping(true);
+        }
+    });
 };
 
 const step = () => {
@@ -40,10 +49,8 @@ const init = () => {
     window.addEventListener('resize', onResize);
     onResize();
 
-    c1 = new Circle({x: 0, y: 0}, 40);
+    c1 = new Circle({x: 0, y: 0}, SIZE_MAIN_CIRCLE);
     for (let i = 0; i < NUM_CIRCLES; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
         const circle = new Circle();
         circle.reset(canvas.width, canvas.height);
         objects.push(circle);

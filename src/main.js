@@ -25,13 +25,11 @@ const draw = () => {
 const update = () => {
     c1.setPosition(mouseCoords);
     c1.update();
-    objects.forEach(currentCircle => {
-        currentCircle.update();
-        if (currentCircle.overlaps(c1)) {
-            c1.setOverlapping(true);
-            currentCircle.setOverlapping(true);
+    objects.reduceRight((acc, item, index, object) =>{
+        if (item.overlaps(c1)) {
+            object.splice(index, 1);
         }
-    });
+    }, []);
 };
 
 const step = () => {
@@ -39,6 +37,14 @@ const step = () => {
     draw();
     window.requestAnimationFrame(step);
 };
+
+const poolNewCircle = () => {
+    for (let i = 0; i < NUM_CIRCLES; i++) {
+        const circle = new Circle();
+        circle.reset(canvas.width, canvas.height);
+        objects.push(circle);
+    }
+}
 
 const init = () => {
     canvas = document.createElement('canvas');
@@ -50,11 +56,8 @@ const init = () => {
     onResize();
 
     c1 = new Circle({x: 0, y: 0}, SIZE_MAIN_CIRCLE);
-    for (let i = 0; i < NUM_CIRCLES; i++) {
-        const circle = new Circle();
-        circle.reset(canvas.width, canvas.height);
-        objects.push(circle);
-    }
+    poolNewCircle();
+    setInterval(poolNewCircle, 10000);
     step();
 };
 
